@@ -65,7 +65,9 @@ display: none;
     display: block;
     width: 1600px;
     background-color: white;
+    
 }
+
 
 .products__list {
     display: flex;
