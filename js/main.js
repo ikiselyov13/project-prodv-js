@@ -1,294 +1,284 @@
-// Урок 1
-
-/* В этом массиве нет id
-const products = [
-    { title: 'beige-trouses', price: 100, img: 'img/beige-trouses.jpg' },
-    { title: 'blue-jacket', price: 200, img: 'img/blue-jacket.jpg' },
-    { title: 'grey-cap', price: 300, img: 'img/grey-cap.jpg' },
-    { title: 'grey-hat', price: 400, img: 'img/grey-hat.jpg' },
-    { title: 'hoodie', price: 500, img: 'img/hoodie.jpg' },
-    { title: 'leather-jacket', price: 600, img: "img/leather-jacket.jpg" },
-    { title: 'white-shirt', price: 700, img: 'img/white-shirt.jpg' },
-    { title: 'white-shoes', price: 800, img: 'img/white-shoes.jpg' },
-    { title: 'white-t-shirt', price: 900, img: 'img/white-t-shirt.jpg' },
-];
-
-const renderProduct = obj => {
-    return `<div class="products__item">
-                <img src="${obj.img}" alt="${obj.title}">
-                <h3>${obj.title}</h3>
-                <p>${obj.price}</p>
-                <button class="products__btn">Добавить в корзину</button>
-            </div>`;
-};
-
-const renderPage = list => {
-    const productsList = (list.map(item => renderProduct(item))).join('');
-    document.querySelector('.products__list').innerHTML = productsList;
-};
-
-renderPage(products);*/
-
-
-// Урок 2 - 4
-
-/*class ProductList {
-    constructor(container = '.products__list') {
-        this.container = container;
-        this.goods = [];//массив товаров из JSON документа
-        //this.sum = 0;
-        this._getProducts()
-            .then(data => { //data - объект js
-                this.goods = data;
-                    //console.log(data);
-                this.render()
-            });
-        //this._fetchProducts();
-        //this.render();
-
-    }
-
-    //getBasket
-    //catalogData
-    _getProducts() {
-        
-        return fetch(`${API}/catalogData.json`)
-         .then(result => result.json())
-         .catch(error => {
-            console.log(error);
-        });
-    }
-    // _fetchProducts() {
-    //     //В этом массиве уже есть id
-    //     this.goods = [
-    //         { id: 1, title: 'beige-trouses', price: 100, img: 'img/beige-trouses.jpg' },
-    //         { id: 2, title: 'blue-jacket', price: 200, img: 'img/blue-jacket.jpg' },
-    //         { id: 3, title: 'grey-cap', price: 300, img: 'img/grey-cap.jpg' },
-    //         { id: 4, title: 'grey-hat', price: 400, img: 'img/grey-hat.jpg' },
-    //         { id: 5, title: 'hoodie', price: 500, img: 'img/hoodie.jpg' },
-    //         { id: 6, title: 'leather-jacket', price: 600, img: "img/leather-jacket.jpg" },
-    //         { id: 7, title: 'white-shirt', price: 700, img: 'img/white-shirt.jpg' },
-    //         { id: 8, title: 'white-shoes', price: 800, img: 'img/white-shoes.jpg' },
-    //         { id: 9, title: 'white-t-shirt', price: 900, img: 'img/white-t-shirt.jpg' },
-    //     ];
-    // }
-
-    render() {
-        const block = document.querySelector(this.container);
-        for (let product of this.goods) {
-            const item = new ProductItem(product);
-            block.insertAdjacentHTML("beforeend", item.render());
-            // block.innerHTML += item.render();
-            //this.sum += product.price;
-        }
-        //console.log(`${this.sum}`);
-    }
-}
-
-class ProductItem {
-    constructor(product) {
-        this.product_name = product.product_name;
-        this.id = product.id;
-        this.price = product.price;
-        this.img = product.img;
-    }
-
-    //<img src="${this.img}" alt="${this.title}">
-    render() {
-        return `<div class="products__item">
-                <h3>${this.product_name}</h3>
-                <p>${this.price}</p>
-                <button class="products__btn">Добавить в корзину</button>
-            </div>`;
-    }
-}
-
-let list = new ProductList();
-
-//Урок 3
-
-//Класс для Корзины товаров
-class Basket {
-    constructor(container = '.basket') {
-        this.container = container;
-        this.goods = [];
-        this._getBasketItem()
-            .then(data => { //data - объект js
-                this.goods = data.contents;
-                this.render()
-            });
-    }
-
-    //getBasket
-    //catalogData
-    _getBasketItem() {
-
-        return fetch(`${API}/getBasket.json`)
-            .then(result => result.json())
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    render() {
-        const block = document.querySelector(this.container);
-        for (let product of this.goods) {
-            const productObj = new ElemBasket(product);
-            block.insertAdjacentHTML("beforeend", productObj.render());
-        }
-    }
-
-    addGood() {
-
-    }
-
-    removeGood() {
-    
-    }
-
-    changeGood() {
-
-    }
-
-    render() {
-
-    }
-
-    //Перейти к оформлению заказа
-    goToOrder() {
-
-    }
-
-    //Удалить все
-    deleteAll() {
-
-    }
-}
-
-//Класс для Элемента корзины товаров
-// class ElemBasket {
-//     constructor(product) {
-//         this.title = product.product_name;
-//         this.id = product.id;
-//         this.price = product.price;
-//         this.quantity = product.quantity;
-//         this.img = product.img;
-//     }
-
-    //Вернет верстку одного товара
-    //<img src="${product.img}" alt="${product.product_name}">
-    render(product) {
-        return `<div class="basket__item">
-                <h3>${product.product_name}</h3>
-                <p>${product.price}</p>
-                <p>${product.quantity}</p>
-                <button class="products__btn">Добавить в корзину</button>
-            </div>`;
-    }
-
-    //Удалить элемент
-    deleteElem() {
-    }
-
-    //Добавить-вычесть элемент
-    quantityElem() {}
-
-    //Перейти к товару
-    goToProduct() {
-    }
-
-}
-
-new Basket();*/
-
-//Урок 5
-
+//Отправляйте свои данные с помощью $emit в верхний компонент, а вниз с помощью props
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 const app = new Vue({
     el: '#app',
-    //1. Добавлены новые свойства
     data: {
         userSearch: '',
-        //11. Теперь станет true
         showCart: false,
         catalogUrl: '/catalogData.json',
         cartUrl: '/getBasket.json',
         cartItems: [],
-        filtered: [],//Изначально эти массивы одинаковые
-        imgCart: 'https://via.placeholder.com/50x100',
-        products: [],//Изначально эти массивы одинаковые
-        imgProduct: 'https://via.placeholder.com/200x150'
+        filtered: [],
+        imgCart: 'https://placehold.it/50x100',
+        products: [],
+        imgProduct: 'https://placehold.it/200x150',
+        error: false
     },
     methods: {
-        //3. Преобразуем файл с товарами корзины
-        getJson(url) {
+        getJson(url){
             return fetch(url)
                 .then(result => result.json())
-                .catch(error => console.log(error))
+                .catch(error=>{
+                    console.log(error);
+                    this.error = true;
+                })
+                
         },
-        addProduct(item) {
+        addProduct(item){
+            this.getJson(`${API}/addToBasket.json`)
+                .then(data => {
+                    if(data.result === 1){
+                       let find = this.cartItems.find(el => el.id_product === item.id_product);
+                       if(find){
+                           find.quantity++;
+                       } else {
+                           const prod = Object.assign({quantity: 1}, item);
+                           this.cartItems.push(prod)
+                       }
+                    }
+                })
+        },
+        remove(item){
             this.getJson(`${API}/addToBasket.json`)
                 .then(data => {
                     if (data.result === 1) {
-                        let find = this.cartItems.find(el => el.id_product === item.id_product);
-                        if (find) {
-                            find.quantity++;
-                        } else {
-                            const prod = Object.assign({ quantity: 1 }, item);//создание нового объекта на основе двух, указанных в параметрах
-                            this.cartItems.push(prod)
-                        }
-                    }
-                })
-        },
-        remove(item) {
-            //14. Коннект к внешнему файлу удаления. Он отвечает за возможность удаления товаров.
-            this.getJson(`${API}/deleteFromBasket.json`)
-                .then(data => {
-                    if (data.result === 1) {
-                        if (item.quantity > 1) {
-                            //15. Уменьшаем на 1 шт --.
+                        if(item.quantity>1){
                             item.quantity--;
                         } else {
-                            //16. Полное удаление из массива. М splice.
                             this.cartItems.splice(this.cartItems.indexOf(item), 1);
                         }
                     }
+                    
                 })
         },
-        filter() {
+        filter(){
             let regexp = new RegExp(this.userSearch, 'i');
             this.filtered = this.products.filter(el => regexp.test(el.product_name));
         }
     },
-    //2. Монтирование. Добавлены новые методы
-    mounted() {
-        //4. Заполняем массив cartItems
+    mounted(){
         this.getJson(`${API + this.cartUrl}`)
             .then(data => {
-                for (let item of data.contents) {
-                    this.cartItems.push(item);
+                for (let item of data.contents){
+                    this.$data.cartItems.push(item);
                 }
             });
-        //5. Запуск для заполнения файла с каталогом товаров
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for (let item of data) {
+                for (let item of data){
                     this.$data.products.push(item);
                     this.$data.filtered.push(item);
                 }
             });
-
-        //6. Парсим локальный файл и добавляем из него товары в каталог. Теперь все массивы заполнены товарами
-        this.getJson(`getProducts.json`)
+        /*this.getJson(`getProducts.json`)
             .then(data => {
-                for (let item of data) {
-                    this.products.push(item);
-                    this.filtered.push(item);
+                for(let item of data){
+                    this.$data.products.push(item);
+                    this.$data.filtered.push(item);
                 }
-            })
+            })*/
     }
 
 });
+
+
+// class List {
+//     constructor(url, container){
+//         this.container = container;
+//         this.url = url;
+//         this.goods = [];
+//         this.allProducts = [];
+//         this.filtered = [];
+//         this._init();
+//     }
+//     getJson(url){
+//         return fetch(url ? url : `${API + this.url}`)
+//             .then(result => result.json())
+//             .catch(error => console.log(error))
+//     }
+//     calcSum(){
+//         return this.allProducts.reduce((accum, item) => accum += item.price, 0);
+//     }
+//     handleData(data){
+//         this.goods = data;
+//         this.render();
+//     }
+//     render(){
+//         const block = document.querySelector(this.container);
+//         for (let product of this.goods){
+//             const productObj = new list[this.constructor.name](product);
+//             this.allProducts.push(productObj);
+//             block.insertAdjacentHTML('beforeend', productObj.render());
+//         }
+//     }
+//     filter(value){
+//         const regexp = new RegExp(value, 'i');
+//         this.filtered = this.allProducts.filter(product => regexp.test(product.product_name));
+//         this.allProducts.forEach(el => {
+//             const block = document.querySelector(`.product-item[data-id="${el.id_product}"]`);
+//             if(!this.filtered.includes(el)){
+//                 block.classList.add('invisible');
+//             } else {
+//                 block.classList.remove('invisible');
+//             }
+//         })
+//     }
+//     _init(){
+//         return false
+//     }
+// }
+// class Item {
+//     constructor(el, img = 'https://placehold.it/200x150'){
+//         this.product_name = el.product_name;
+//         this.price = el.price;
+//         this.img = img;
+//         this.id_product = el.id_product
+//     }
+//
+//     render(){
+//         return `<div class="product-item" data-id="${this.id_product}">
+//                     <img src="${this.img}" alt="Some img">
+//                     <div class="desc">
+//                         <h3>${this.product_name}</h3>
+//                         <p>${this.price} $</p>
+//                         <button class="buy-btn"
+//                         data-id="${this.id_product}"
+//                         data-price="${this.price}"
+//                         data-name="${this.product_name}"
+//                         data-img="${this.img}">
+//                         Купить
+// </button>
+//                     </div>
+//                 </div>`;
+//
+//     }
+// }
+//
+//
+// class ProductsList extends List {
+//     constructor(cart, url = '/catalogData.json',container = '.products'){
+//         super(url, container);
+//         this.cart = cart;
+//         this.getJson()
+//             .then(data => this.handleData(data));
+//     }
+//     _init(){
+//         document.querySelector(this.container).addEventListener('click', e => {
+//             if(e.target.classList.contains('buy-btn')){
+//                 this.cart.addProduct(e.target);
+//             }
+//         });
+//         document.querySelector('.search-form').addEventListener('submit', e => {
+//             e.preventDefault();
+//             this.filter(document.querySelector('.search-field').value);
+//         })
+//     }
+// }
+//
+// class Product extends Item{}
+// class Cart extends List{
+//     constructor(url = '/getBasket.json', container = '.cart-block'){
+//         super(url, container);
+//         this.getJson()
+//             .then(data => this.handleData(data.contents));
+//     }
+//     addProduct(element){
+//         this.getJson(`${API}/addToBasket.json`)
+//             .then(data => {
+//                 if(data.result === 1){
+//                     let productId = +element.dataset['id'];
+//                     let find = this.allProducts.find(product => product.id_product === productId);
+//                     if(find){
+//                         find.quantity++;
+//                         this._updateCart(find);
+//                     } else {
+//                         let product = {
+//                             id_product: productId,
+//                             price: +element.dataset['price'],
+//                             product_name: element.dataset['name'],
+//                             quantity: 1
+//                         };
+//                         this.goods = [product];
+//                         this.render();
+//                     }
+//                 } else {
+//                     alert('Error')
+//                 }
+//             })
+//     }
+//     removeProduct(element){
+//         this.getJson(`${API}/deleteFromBasket.json`)
+//             .then(data => {
+//                 if(data.result === 1){
+//                     let productId = +element.dataset['id'];
+//                     let find = this.allProducts.find(product => product.id_product === productId);
+//                     if(find.quantity > 1){
+//                         find.quantity--;
+//                         this._updateCart(find);
+//                     } else {
+//                         this.allProducts.splice(this.allProducts.indexOf(find), 1);
+//                         document.querySelector(`.cart-item[data-id="${productId}"]`).remove();
+//                     }
+//                 } else {
+//                     alert('Error')
+//                 }
+//             })
+//     }
+//     _updateCart(product){
+//         const block = document.querySelector(`.cart-item[data-id="${product.id_product}"]`);
+//         block.querySelector(`.product-quantity`).textContent = `Quantity: ${product.quantity}`;
+//         block.querySelector(`.product-price`).textContent = `$${product.quantity*product.price}`;
+//     }
+//     _init(){
+//         document.querySelector(this.container).addEventListener('click', e => {
+//             if(e.target.classList.contains('del-btn')){
+//                 this.removeProduct(e.target);
+//             }
+//         });
+//         document.querySelector('.btn-cart').addEventListener('click', () => {
+//             document.querySelector(this.container).classList.toggle('invisible')
+//         })
+//     }
+// }
+//
+// class CartItem extends Item{
+//     constructor(el, img = 'https://placehold.it/50x100'){
+//         super(el, img);
+//         this.quantity = el.quantity;
+//     }
+//     render(){
+//         return `<div class="cart-item" data-id="${this.id_product}">
+//     <div class="product-bio">
+//         <img src="${this.img}" alt="Some image">
+//         <div class="product-desc">
+//             <p class="product-title">${this.product_name}</p>
+//             <p class="product-quantity">Quantity: ${this.quantity}</p>
+//             <p class="product-single-price">$${this.price} each</p>
+//         </div>
+//     </div>
+//     <div class="right-block">
+//         <p class="product-price">${this.quantity*this.price}</p>
+//         <button class="del-btn" data-id="${this.id_product}">&times;</button>
+//     </div>
+// </div>`
+//     }
+// }
+//
+// const list = {
+//     ProductsList: Product,
+//     Cart: CartItem
+// };
+//
+//
+// const cart = new Cart();
+// const products = new ProductsList(cart);
+// setTimeout(() => {
+//     products.getJson(`getProducts.json`).then(data => products.handleData(data));
+// }, 300);
+
+// list.getProducts(() => {
+//     list.render();
+// });
 
 

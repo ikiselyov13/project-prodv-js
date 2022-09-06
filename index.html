@@ -3,148 +3,47 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div id="app">
-        <header class="header">
-            <section class="header__nav-menu">
-                <h2 class="header__title">nav-menu</h2>
-            </section>
-            <section class="header__cart">
-                <h1 class="visually-hidden">new arriwals</h1>
-                <h2 class="visually-hidden">cat</h2>
-                <!--7. Переопределяем (prevent) событие @submit-->
-                <form action="#" class="search-form" @submit.prevent="filter">
-                    <!--8. В теге input сделали явную привязку к userSearch. Т.о. заполнили массив userSearch.-->
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+
+                <search></search>
+
+                <!--<form action="#" class="search-form" @submit.prevent="filter">
                     <input type="text" class="search-field" v-model="userSearch">
                     <button type="submit" class="btn-search">
                         <i class="fas fa-search"></i>
                     </button>
-                </form>
-                <!--10. По клику на кнопку Корзина меняем свойство showCart. Если было true, станет false.-->
+                </form>-->
+
                 <button class="btn-cart" type="button" @click="showCart = !showCart">Корзина</button>
-                <div class="cart-block" v-show="showCart">
-                    <!--11. Делаем параграф. Если в массиве cartItems нет данных, вывести Массив пустой.-->
-                    <p v-if="!cartItems.length">Cart is empty</p>
-                    <!--12. Обходим циклом массив cartItems v-for.-->
-                    <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
-                        <div class="product-bio">
-                            <img :src="imgCart" alt="Some img">
-                            <div class="product-desc">
-                                <div class="product-title">{{ item.product_name }}</div>
-                                <div class="product-quantity">Quantity: {{ item.quantity }}</div>
-                                <div class="product-single-price">$ {{ item.price }} each</div>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <div class="product-price">{{item.quantity*item.price}}</div>
-                            <!--13. Кнопка Удалить. По клику м remove.-->
-                            <button class="del-btn" @click="remove(item)">&times;</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+
+
+                <cart :cart-items="cartItems" :img="imgCart" :visibility="showCart"></cart>
+
+            </div>
+
         </header>
         <main>
-            <div class="visually-hidden">
-                <!--<h2 class="visually-hidden">cat</h2>
-                    <div class="basket-item">
-                        <div class="basket-item-image"></div>
-                        <div class="basket-item-content"></div>
-                        <div class="basket-item-result"></div>
-                    </div>
-                    <div class="basket-item">
-                    </div>
-                    <div class="basket-item"></div>-->
-            </div>
-            <section class="filter">
-                <h2 class="visually-hidden">filter</h2>
-            </section>
-            <section class="products">
-                <div class="container">
-                    <h2 class="visually-hidden">products</h2>
-                    <div class="products__list">
-                        <!--9. Поменяли products на filtered.-->
-                        <div class="products__item" v-for="product of filtered" :key="product.id_product">
-                            <img :src="imgCatalog" alt="Some img">
-                            <div class="desc">
-                                <h3 class="products__item-title">{{product.product_name}}</h3>
-                                <p class="products__item-price">{{product.price}} $</p>
-                                <button class="products__item-button" @click="addProduct(product)">Купить</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--<ul class="products__list">
-                            <li class="products__item">
-                                <img src="img/beige-trouses.jpg" alt="beige-trouses">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/blue-jacket.jpg" alt="blue-jacket">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/grey-cap.jpg" alt="grey-cap">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/grey-hat.jpg" alt="grey-hat">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/hoodie.jpg" alt="hoodie">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/leather-jacket.jpg" alt="leather-jacket">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/white-shirt.jpg" alt="white-shirt">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/white-shoes.jpg" alt="white-shoes">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                            <li class="products__item">
-                                <img src="img/white-t-shirt.jpg" alt="white-t-shirt">
-                                <h3 class="products__item-title"></h3>
-                                <p class="products__item-price"></p>
-                                <button class="products__item-button">Добавить в корзину</button>
-                            </li>
-                        </ul>-->
-                </div>
-            </section>
+            <products :products="filtered" :img="imgProduct" @add-product="addProduct"></products>
         </main>
-        <footer></footer>
     </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8"></script>
-    <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/SearchComponent.js"></script>
+    <script src="js/ProductComponent.js"></script>
+    <script src="js/CartComponent.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
